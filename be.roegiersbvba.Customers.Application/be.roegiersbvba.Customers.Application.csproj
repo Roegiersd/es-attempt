@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\be.roegiersbvba.Customers.Commands\be.roegiersbvba.Customers.Commands.csproj" />
+    <ProjectReference Include="..\Be.Roegiersbvba.Customers.Domain\be.roegiersbvba.Customers.Domain.csproj" />
+    <ProjectReference Include="..\be.roegiersbvba.Customers.Dto\be.roegiersbvba.Customers.Dto.csproj" />
+  </ItemGroup>
+
+</Project>

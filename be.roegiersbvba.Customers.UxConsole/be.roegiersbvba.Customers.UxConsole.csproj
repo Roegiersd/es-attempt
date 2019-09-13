@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EventStore.ClientAPI.NetCore" Version="4.1.0.23" />
+    <ProjectReference Include="..\be.roegiersbvba.Customers.Application\be.roegiersbvba.Customers.Application.csproj" />
   </ItemGroup>
 
 </Project>

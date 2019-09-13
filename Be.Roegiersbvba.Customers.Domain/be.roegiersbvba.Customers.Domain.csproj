@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AssemblyName>be.roegiersbvba.Customers.Domain</AssemblyName>
+    <RootNamespace>be.roegiersbvba.Customers.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Customer\Factories\" />
+  </ItemGroup>
+
+</Project>
