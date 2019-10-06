@@ -2,9 +2,9 @@
 
 namespace be.roegiersbvba.Customers.Domain.Events
 {
-    public sealed class AddressCreated : EventBase
+   public sealed class AddressCreated : EventBase<Address>, ICreatedEntity
     {
-      
+
 
         public AddressCreated(Guid id, string street, string city, string zipCode, string number, string function) : base()
         {
@@ -16,7 +16,7 @@ namespace be.roegiersbvba.Customers.Domain.Events
             Function = function;
         }
 
-        public Guid Id { get; private set; }
+        //  public Guid Id { get; private set; }
         public string Street { get; private set; }
         public string City { get; private set; }
         public string ZipCode { get; private set; }

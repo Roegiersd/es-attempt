@@ -8,6 +8,7 @@
     <ProjectReference Include="..\be.roegiersbvba.Customers.Commands\be.roegiersbvba.Customers.Commands.csproj" />
     <ProjectReference Include="..\Be.Roegiersbvba.Customers.Domain\be.roegiersbvba.Customers.Domain.csproj" />
     <ProjectReference Include="..\be.roegiersbvba.Customers.Dto\be.roegiersbvba.Customers.Dto.csproj" />
+    <ProjectReference Include="..\be.roegiersbvba.Customers.Queries\be.roegiersbvba.Customers.Queries.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
 ﻿using be.roegiersbvba.Customers.Commands;
 using be.roegiersbvba.Customers.Dto;
 using System;
-using System.Linq;
+using be.roegiersbvba.Customers.Domain.Repositories;
 
 namespace be.roegiersbvba.Customers.Application
 {
@@ -9,17 +9,17 @@ namespace be.roegiersbvba.Customers.Application
     {
         public void Handle(CreateAddressForcustomer address)
         {
-            var customer = Domain.Repositories.Repository.Customers.Where(c => c.Id.Equals(address.CustomerId)).FirstOrDefault();
+            var customerEvents = CustomerRepository.GetCustomers(address.CustomerId);
+            var customer = (Domain.Customer)Domain.AggregateRoot.Replay(customerEvents); //fix.
             customer.AddAddress(address.Street, address.City, address.ZipCode, address.Number, address.Function);
-            customer.Events.ForEach(e => Console.WriteLine(e.GetType().ToString()));
-
-
-            var nc = Domain.Customer.Replay(customer.Events);
+            CustomerRepository.SaveCustomer(customer);
         }
 
         public IDto HandleAndReturn(CreateAddressForcustomer address)
         {
-            throw new NotImplementedException("no returntype for addresses;");
+            throw new NotImplementedException("No returntype defined in method.");
         }
+
+
     }
 }

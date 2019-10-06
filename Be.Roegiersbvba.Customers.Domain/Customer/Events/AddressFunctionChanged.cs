@@ -1,4 +1,6 @@
-﻿namespace be.roegiersbvba.Customers.Domain.Events
+﻿using System;
+
+namespace be.roegiersbvba.Customers.Domain.Events
 {
     public class AddressFunctionChanged : IEvent
     {
@@ -7,5 +9,6 @@
             Function = function;
         }
         public string Function { get; private set; }
+        public Guid Id { get; private set; }
     }
 }

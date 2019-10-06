@@ -1,30 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace be.roegiersbvba.Customers.Domain
 {
     public abstract class Entity
     {
-        private AggregateRoot Root;
-        private Entity()
+        public AggregateRoot Root { get; private set; }
+        public readonly List<object> Events;
+        protected Entity(AggregateRoot root)
         {
-
-        }
-
-        protected void Apply(IEvent e) => Root.Apply(e);
-
-        internal Entity(AggregateRoot root)
-        {
-            if (root == null)
-                throw new DomainException("A non root entity cannot exist without an AggregateRoot");
             Root = root;
+            Events = new List<object>();
+
         }
 
-        protected void RegisterEventHandlers<T>(Action<T> handler) where T : IEvent
+        internal void Apply(IEvent e)
         {
-            var type = typeof(T);
-            Root.RegisterEventHandlers<T>(handler);
+            Root.Apply(e);
         }
 
 
+
+        protected void RaiseEvent(IEvent @event)
+        {
+            Events.Add(@event);
+        }
+
+        //A handler is registered for a specific entity (identifier), for simplicity guid.empty is used if no id is relevant.
+        internal void RegisterEventHandlers<T>(Action<T> handler, Guid id) where T : IEvent
+        {
+            Root.RegisterEventHandlers(handler, id);
+        }
     }
 }

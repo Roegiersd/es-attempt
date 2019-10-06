@@ -6,20 +6,19 @@ namespace be.roegiersbvba.Customers.Application
     {
         public void Handle(Commands.CreateCustomer customer)
         {
-            var x = new Domain.Customer(customer.Lastname, customer.Firstname, customer.CustomerType);
-            Domain.Repositories.Repository.Customers.Add(x);
-            //define edges return x?;
+            Process(customer);
         }
 
         public Dto.Customer HandleAndReturn(Commands.CreateCustomer customer)
         {
-            var x = new Domain.Customer(customer.Lastname, customer.Firstname, customer.CustomerType);
-            var result = new Dto.Customer();
-            result.Id = x.Id;
-            Domain.Repositories.Repository.Customers.Add(x);
-            return result;
+            return new Dto.Customer { Id = Process(customer).Id };
+        }
+
+        private Domain.Customer Process(Commands.CreateCustomer customer)
+        {
+            var customerEntity = new Domain.Customer(customer.Lastname, customer.Firstname, customer.CustomerType);
+            Domain.Repositories.CustomerRepository.SaveCustomer(customerEntity);
+            return customerEntity;
         }
     }
-
 }
-

@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using be.roegiersbvba.Customers.Domain.Events;
 
 namespace be.roegiersbvba.Customers.Domain
 {
     public class Customer : AggregateRoot
     {
-        public static Customer Replay(List<object> events)
-        {
-            var customer = new Customer();
-            foreach (var @event in events)
-            {
-                var x = @event as IEvent;
-                customer.Apply(x);
-            }
-            return customer;
-        }
+        //public static Customer Replay(List<object> events)
+        //{
+        //    var customer = new Customer();
+
+        //    foreach (var @event in events)
+        //    {
+        //        var x = @event as IEvent;
+        //        customer.Replay(x);
+        //    }
+        //    return customer;
+        //}
 
         public string Name { get; private set; }
         public string Firstname { get; private set; }
@@ -31,25 +31,36 @@ namespace be.roegiersbvba.Customers.Domain
         public void AddAddress(string street, string city, string zip, string number, string function)
         {
             var address = new Address(this, city, zip, street, number, function);
-            Apply(new AddressAdded(address));
+            Apply(new AddressAdded(Id, address.Id));
 
         }
-        public void ChangePrimaryAddress(Address newPrimaryAddress)
+        public void ChangePrimaryAddress(Guid identifier)
         {
-            if (Addresses.Any(x => x.Id == newPrimaryAddress.Id))
-            {
-                this.PrimaryAddress = newPrimaryAddress;
-                //raiseevent
-            }
-            throw new DomainException();
+            var oldPrimaryAddress = Addresses.FirstOrDefault(ad => ad.IsPrimaryAddress);
+            var newPrimaryAddress = Addresses.FirstOrDefault(ad => ad.Id.Equals(identifier));
+            if (newPrimaryAddress.IsPrimaryAddress)
+                return;
+            newPrimaryAddress.MarkAsPrimaryAddress();
+            oldPrimaryAddress.CancelAsPrimaryAddress();
+            Apply(new PrimaryAddressChanged(newPrimaryAddress, oldPrimaryAddress));
+
         }
 
-        private Customer() : base()
+        private Customer(IEvent @event) : this(@event.Id)
         {
+            Apply(@event); //fix sidefx
+        }
+
+        private Customer() : this(Guid.NewGuid())
+        {
+        }
+
+        private Customer(Guid id) : base()
+        {
+            Id = id;
             Addresses = new List<Address>();
-            RegisterEventHandlers<CustomerCreated>(OnCustomerCreated);
-            RegisterEventHandlers<AddressAdded>(OnAddressAdded);
-            
+            RegisterEventHandlers<CustomerCreated>(OnCustomerCreated, Id);
+            RegisterEventHandlers<AddressAdded>(OnAddressAdded, Id);
         }
 
         public Customer(string name, string firstname, string customerType) : this()
@@ -68,8 +79,32 @@ namespace be.roegiersbvba.Customers.Domain
             {
                 throw new ArgumentException("message", nameof(customerType));
             }
-            Apply(new CustomerCreated(name, firstname, customerType, Guid.NewGuid()));
+            Apply(new CustomerCreated(name, firstname, customerType, Id));
 
+        }
+
+        private void OnPrimaryAddresschanged(PrimaryAddressChanged e)
+        {
+            this.PrimaryAddress = e.NewPrimaryAddress;
+            var index = Addresses.IndexOf(this.Addresses.First(ad => ad.Id.Equals(e.NewPrimaryAddress.Id)));
+            if (index != -1)
+                Addresses[index] = e.NewPrimaryAddress;
+            else
+            {
+                Addresses.Add(e.NewPrimaryAddress);
+            }
+
+            if (e.OldPrimaryAddress != null)
+            {
+                index = -1;
+                index = Addresses.IndexOf(this.Addresses.First(ad => ad.Id.Equals(e.NewPrimaryAddress.Id)));
+                if (index != -1)
+                    Addresses[index] = e.OldPrimaryAddress;
+                else
+                {
+                    Addresses.Add(e.OldPrimaryAddress);
+                }
+            }
         }
 
         private void OnCustomerCreated(CustomerCreated e)
@@ -82,13 +117,14 @@ namespace be.roegiersbvba.Customers.Domain
 
         private void OnAddressAdded(AddressAdded e)
         {
-            this.Addresses.Add(e.Address);
+
+            this.Addresses.Add(this.PopEntity<Address>(e.AddressId));
         }
 
-        
+
     }
 
 
-    
+
 
 }

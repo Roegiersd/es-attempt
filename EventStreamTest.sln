@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStreamTest", "EventStreamTest\EventStreamTest.csproj", "{CCACD6D4-7713-421D-92F9-EE6F2375A6B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "be.roegiersbvba.Customers.Domain", "Be.Roegiersbvba.Customers.Domain\be.roegiersbvba.Customers.Domain.csproj", "{05DCD3AB-11CB-41C3-A5FD-B715D35B1251}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "be.roegiersbvba.Customers.Domain", "Be.Roegiersbvba.Customers.Domain\be.roegiersbvba.Customers.Domain.csproj", "{05DCD3AB-11CB-41C3-A5FD-B715D35B1251}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "be.roegiersbvba.Customers.Application", "be.roegiersbvba.Customers.Application\be.roegiersbvba.Customers.Application.csproj", "{C86539B8-9F8A-4E4A-9D0C-128CE6EAF599}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "be.roegiersbvba.Customers.Application", "be.roegiersbvba.Customers.Application\be.roegiersbvba.Customers.Application.csproj", "{C86539B8-9F8A-4E4A-9D0C-128CE6EAF599}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "be.roegiersbvba.Customers.Infrastructure", "be.roegiersbvba.Customers.Infrastructure\be.roegiersbvba.Customers.Infrastructure.csproj", "{3E622174-3A8F-46F7-BB71-8D6B86806CEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "be.roegiersbvba.Customers.Infrastructure", "be.roegiersbvba.Customers.Infrastructure\be.roegiersbvba.Customers.Infrastructure.csproj", "{3E622174-3A8F-46F7-BB71-8D6B86806CEC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "be.roegiersbvba.Customers.Commands", "be.roegiersbvba.Customers.Commands\be.roegiersbvba.Customers.Commands.csproj", "{1E5B65A9-0384-412F-8002-6FF4DEF9167B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "be.roegiersbvba.Customers.Commands", "be.roegiersbvba.Customers.Commands\be.roegiersbvba.Customers.Commands.csproj", "{1E5B65A9-0384-412F-8002-6FF4DEF9167B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "be.roegiersbvba.Customers.UxConsole", "be.roegiersbvba.Customers.UxConsole\be.roegiersbvba.Customers.UxConsole.csproj", "{F84CE0B0-B586-4E90-806F-D4D796B5073E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "be.roegiersbvba.Customers.UxConsole", "be.roegiersbvba.Customers.UxConsole\be.roegiersbvba.Customers.UxConsole.csproj", "{F84CE0B0-B586-4E90-806F-D4D796B5073E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "be.roegiersbvba.Customers.Dto", "be.roegiersbvba.Customers.Dto\be.roegiersbvba.Customers.Dto.csproj", "{F2F172F9-0A49-4AF2-8EEB-34C3C1056580}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "be.roegiersbvba.Customers.Dto", "be.roegiersbvba.Customers.Dto\be.roegiersbvba.Customers.Dto.csproj", "{F2F172F9-0A49-4AF2-8EEB-34C3C1056580}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "be.roegiersbvba.Customers.Queries", "be.roegiersbvba.Customers.Queries\be.roegiersbvba.Customers.Queries.csproj", "{A4B791E8-32A0-44CE-96D2-6F0E713CFE32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CCACD6D4-7713-421D-92F9-EE6F2375A6B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CCACD6D4-7713-421D-92F9-EE6F2375A6B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CCACD6D4-7713-421D-92F9-EE6F2375A6B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CCACD6D4-7713-421D-92F9-EE6F2375A6B1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{05DCD3AB-11CB-41C3-A5FD-B715D35B1251}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{05DCD3AB-11CB-41C3-A5FD-B715D35B1251}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05DCD3AB-11CB-41C3-A5FD-B715D35B1251}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,6 +47,10 @@ Global
 		{F2F172F9-0A49-4AF2-8EEB-34C3C1056580}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2F172F9-0A49-4AF2-8EEB-34C3C1056580}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2F172F9-0A49-4AF2-8EEB-34C3C1056580}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4B791E8-32A0-44CE-96D2-6F0E713CFE32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4B791E8-32A0-44CE-96D2-6F0E713CFE32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4B791E8-32A0-44CE-96D2-6F0E713CFE32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4B791E8-32A0-44CE-96D2-6F0E713CFE32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

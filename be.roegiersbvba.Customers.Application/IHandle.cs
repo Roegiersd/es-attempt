@@ -1,7 +1,5 @@
 ﻿using be.roegiersbvba.Customers.Commands;
 using be.roegiersbvba.Customers.Dto;
-using System;
-using System.Reflection.Metadata;
 
 namespace be.roegiersbvba.Customers.Application
 {
