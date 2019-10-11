@@ -25,8 +25,9 @@ namespace be.roegiersbvba.Customers.Domain
         public Address PrimaryAddress { get; private set; }
         public Address DefaultShipTo { get; private set; }
         public List<Contact> Contacts { get; private set; }
+        public List<CreditCardInformation> CreditCards { get; private set; }
 
-        public Guid Id { get; private set; }
+
 
         public void AddAddress(string street, string city, string zip, string number, string function)
         {
@@ -46,6 +47,11 @@ namespace be.roegiersbvba.Customers.Domain
 
         }
 
+        public void AddCreditCard(string holder, string cardNumber, string expmonth, string expyear)
+        {
+            Apply(new CreditCardAdded(this.Id, CreditCardInformation.CreditCardInformationFactory.CreateCreditCardInformation(holder, cardNumber, expmonth, expyear)));
+        }
+
         private Customer(IEvent @event) : this(@event.Id)
         {
             Apply(@event); //fix sidefx
@@ -55,13 +61,16 @@ namespace be.roegiersbvba.Customers.Domain
         {
         }
 
-        private Customer(Guid id) : base()
+        private Customer(Guid id) : base(id)
         {
-            Id = id;
+            CreditCards = new List<CreditCardInformation>();
+            //  Id = id;
             Addresses = new List<Address>();
-            RegisterEventHandlers<CustomerCreated>(OnCustomerCreated, Id);
-            RegisterEventHandlers<AddressAdded>(OnAddressAdded, Id);
+            //RegisterEventHandlers<CustomerCreated>(OnCustomerCreated, Id);
+            //RegisterEventHandlers<AddressAdded>(OnAddressAdded, Id);
         }
+
+
 
         public Customer(string name, string firstname, string customerType) : this()
         {
@@ -121,10 +130,17 @@ namespace be.roegiersbvba.Customers.Domain
             this.Addresses.Add(this.PopEntity<Address>(e.AddressId));
         }
 
+        private void OnCreditCardAdded(CreditCardAdded e)
+        {
+            CreditCards.Add(CreditCardInformation.CreditCardInformationFactory.ReplayCreditCardInformation(e));
+        }
 
+        protected override void RegisterAllHandlers()
+        {
+            RegisterEventHandlers<CustomerCreated>(OnCustomerCreated, Id);
+            RegisterEventHandlers<AddressAdded>(OnAddressAdded, Id);
+            RegisterEventHandlers<CreditCardAdded>(OnCreditCardAdded, Id);
+
+        }
     }
-
-
-
-
 }

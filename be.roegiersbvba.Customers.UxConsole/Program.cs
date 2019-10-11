@@ -1,22 +1,37 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Runtime.Serialization.Json;
 using be.roegiersbvba.Customers.Commands;
+using be.roegiersbvba.Customers.Domain;
 using be.roegiersbvba.Customers.Queries;
 
 namespace be.roegiersbvba.Customers.UxConsole
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var p = new Program();
+
             var id = p.CreateCustomer();
             p.GetCustomer(id);
             p.AddAddress(id);
             p.GetCustomer(id);
             p.AddAddress2(id);
             p.GetCustomer(id);
+            p.AddCreditCardInformation(id);
+            p.GetCustomer(id);
+            p.GetDomainCustomer(id);
             Console.WriteLine("done");
             Console.ReadLine();
+
+        }
+
+        public void AddCreditCardInformation(Guid customerId)
+        {
+            new Application.ModifyFormOfPayment().Handle(new ModifyFormOfPayment("Davy Roegiers", "123-456", "04", "28", customerId));
+            Console.WriteLine("Added form of payment");
         }
 
         public Guid CreateCustomer()
@@ -47,6 +62,12 @@ namespace be.roegiersbvba.Customers.UxConsole
             {
                 Console.WriteLine(@event.ToString());
             }
+        }
+
+        public void GetDomainCustomer(Guid id)
+        {
+            var res = new Application.GetCustomer().Execute(id);
+            Console.WriteLine(res.CreditCards.SingleOrDefault()?.CardHolder);
         }
     }
 }

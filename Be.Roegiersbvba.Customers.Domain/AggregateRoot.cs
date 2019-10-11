@@ -9,7 +9,7 @@ namespace be.roegiersbvba.Customers.Domain
     public abstract class AggregateRoot
     {
         private Dictionary<Guid, object> CreatedEntityReferences = new Dictionary<Guid, object>();
-
+        public Guid Id { get; protected set; }
         /// <summary>
         /// Required to apply non root entities to the aggregate during replay.
         /// </summary>
@@ -26,10 +26,12 @@ namespace be.roegiersbvba.Customers.Domain
         }
         public readonly List<object> Events;
         protected Dictionary<Type, Dictionary<Guid, Action<object>>> Eventhandlers;
-        protected AggregateRoot()
+        protected AggregateRoot(Guid id)
         {
+            Id = id;
             Events = new List<object>();
             Eventhandlers = new Dictionary<Type, Dictionary<Guid, Action<object>>>();
+            RegisterAllHandlers();
         }
 
         internal void Apply(IEvent e)
@@ -52,7 +54,7 @@ namespace be.roegiersbvba.Customers.Domain
             }
             else
             {
-                throw new DomainException(string.Format("No valid handler found for ....", e.GetType().ToString()));
+                throw new DomainException(string.Format("No valid handler found for `{0}`", e.GetType().ToString()));
             }
         }
 
@@ -154,6 +156,9 @@ namespace be.roegiersbvba.Customers.Domain
                 Eventhandlers.Add(eventType, handlers);
             }
         }
+
+        protected abstract void RegisterAllHandlers();
+
 
     }
 }

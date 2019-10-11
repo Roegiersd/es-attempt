@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="newtonsoft.json" Version="12.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\be.roegiersbvba.Customers.Application\be.roegiersbvba.Customers.Application.csproj" />
   </ItemGroup>
 
